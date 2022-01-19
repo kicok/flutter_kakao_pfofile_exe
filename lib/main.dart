@@ -61,8 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           if (state == AppState.free) {
             _pickImage();
-          } else if (state == AppState.picked) {
-            _cropImage();
+            // } else if (state == AppState.picked) {
+            //   _cropImage();
           } else if (state == AppState.cropped) {
             _clearImage();
           }
@@ -89,9 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
     imageFile = pickedImage != null ? File(pickedImage.path) : null;
     if (imageFile != null) {
-      setState(() {
-        state = AppState.picked;
-      });
+      _cropImage();
     }
   }
 
