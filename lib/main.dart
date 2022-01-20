@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'src/controller/profileController.dart';
 import 'src/profile.dart';
 
 void main() => runApp(const MyApp());
@@ -13,6 +14,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'ImageCropper',
       theme: ThemeData.light().copyWith(primaryColor: Colors.deepOrange),
+      initialBinding: BindingsBuilder(() {
+        Get.lazyPut<ProfileController>(() => ProfileController());
+      }),
       home: const Profile(),
     );
   }

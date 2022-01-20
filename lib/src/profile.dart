@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Profile extends StatelessWidget {
+import 'controller/profileController.dart';
+
+class Profile extends GetView<ProfileController> {
   const Profile({Key? key}) : super(key: key);
 
   Widget _header() {
@@ -16,9 +18,7 @@ class Profile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              onTap: () {
-                print("프로필 편집 취소");
-              },
+              onTap: controller.toggleEditProfile,
               child: Row(
                 children: const [
                   Icon(
@@ -87,26 +87,32 @@ class Profile extends StatelessWidget {
   }
 
   Widget _footer() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(width: 1, color: Colors.white.withOpacity(0.4)),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _oneButton(Icons.chat_bubble, "나와의 채팅", () {}),
-            _oneButton(Icons.edit, "프로필 편집", () {}),
-            _oneButton(Icons.chat_bubble_outline, "카카오스토리", () {}),
-          ],
-        ),
-      ),
+    return Obx(
+      () => controller.isEditMyProfile.value
+          ? Container()
+          : Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                        width: 1, color: Colors.white.withOpacity(0.4)),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _oneButton(Icons.chat_bubble, "나와의 채팅", () {}),
+                    _oneButton(
+                        Icons.edit, "프로필 편집", controller.toggleEditProfile),
+                    _oneButton(Icons.chat_bubble_outline, "카카오스토리", () {}),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 
@@ -114,13 +120,43 @@ class Profile extends StatelessWidget {
     return Container(
       width: 120,
       height: 120,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(40),
-        child: Image.asset(
-          "assets/images/default_user.png",
-          fit: BoxFit.cover,
+      child: Stack(children: [
+        Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(40),
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: Image.asset(
+                "assets/images/default_user.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
         ),
-      ),
+        controller.isEditMyProfile.value
+            ? Positioned(
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    padding: const EdgeInsets.all(7),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: const Icon(
+                      Icons.camera_alt,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
+      ]),
     );
   }
 
@@ -130,7 +166,7 @@ class Profile extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            "평범하게살자",
+            "평범하게 살자",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
@@ -150,20 +186,79 @@ class Profile extends StatelessWidget {
     );
   }
 
+  Widget _partProfileInfo(String value, Function() ontap) {
+    return GestureDetector(
+      onTap: ontap,
+      child: Stack(children: [
+        Container(
+          height: 45,
+          // 외형이 텍스트 에디터처럼 보이게 처리한다.
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        const Positioned(
+          right: 0,
+          bottom: 15,
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 18,
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget _editProfileInfo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          _partProfileInfo("평범하게 살자", () {}),
+          _partProfileInfo("구독과 좋아요 부탁드립니다.", () {}),
+        ],
+      ),
+    );
+  }
+
   Widget _myProfile() {
     return Positioned(
-        bottom: 120,
-        left: 0,
-        right: 0,
-        child: Container(
-          height: 200,
-          child: Column(
+      bottom: 120,
+      left: 0,
+      right: 0,
+      child: Container(
+        height: 220,
+        child: Obx(
+          () => Column(
             children: [
               _profileImage(),
-              _profileInfo(),
+              controller.isEditMyProfile.value
+                  ? _editProfileInfo()
+                  : _profileInfo(),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   @override
