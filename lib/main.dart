@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'src/controller/profileController.dart';
+import 'src/controller/profile_controller.dart';
 import 'src/profile.dart';
 
 void main() => runApp(const MyApp());

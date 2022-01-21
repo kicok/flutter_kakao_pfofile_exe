@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'controller/profileController.dart';
+import 'controller/profile_controller.dart';
 
 class Profile extends GetView<ProfileController> {
   const Profile({Key? key}) : super(key: key);
@@ -233,7 +233,9 @@ class Profile extends GetView<ProfileController> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
-          _partProfileInfo("평범하게 살자", () {}),
+          _partProfileInfo("평범하게 살자", () {
+            print("닉네임 변ㅕ 이벤트");
+          }),
           _partProfileInfo("구독과 좋아요 부탁드립니다.", () {}),
         ],
       ),
