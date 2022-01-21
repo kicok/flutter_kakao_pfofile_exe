@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'components/text_edit_widget.dart';
 import 'controller/profile_controller.dart';
 
 class Profile extends GetView<ProfileController> {
@@ -234,7 +235,7 @@ class Profile extends GetView<ProfileController> {
       child: Column(
         children: [
           _partProfileInfo("평범하게 살자", () {
-            print("닉네임 변ㅕ 이벤트");
+            Get.dialog(const TextEditWidget(text: "평범하게 살자"));
           }),
           _partProfileInfo("구독과 좋아요 부탁드립니다.", () {}),
         ],
@@ -266,6 +267,8 @@ class Profile extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      //textfiled에서 터치 했을때 키보드 올라오면서 화면 밀리지 않도록 하기(overflow 생기지 않도록 하기)
       backgroundColor: const Color(0xff3f3f3f),
       body: SafeArea(
         child: Stack(
