@@ -163,12 +163,12 @@ class Profile extends GetView<ProfileController> {
 
   Widget _profileInfo() {
     return Column(
-      children: const [
+      children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            "평범하게 살자",
-            style: TextStyle(
+            controller.myProfile.value.name ?? "",
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
               color: Colors.white,
@@ -176,8 +176,8 @@ class Profile extends GetView<ProfileController> {
           ),
         ),
         Text(
-          "구독과 좋아요 부탁드립니다.",
-          style: TextStyle(
+          controller.myProfile.value.description ?? "",
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
             color: Colors.white,
@@ -234,10 +234,17 @@ class Profile extends GetView<ProfileController> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
-          _partProfileInfo("평범하게 살자", () {
-            Get.dialog(const TextEditWidget(text: "평범하게 살자"));
+          _partProfileInfo(controller.myProfile.value.name ?? "", () async {
+            String name = await Get.dialog(
+                TextEditWidget(text: controller.myProfile.value.name ?? ""));
+            controller.updateName(name);
           }),
-          _partProfileInfo("구독과 좋아요 부탁드립니다.", () {}),
+          _partProfileInfo(controller.myProfile.value.description ?? "",
+              () async {
+            String name = await Get.dialog(TextEditWidget(
+                text: controller.myProfile.value.description ?? ""));
+            controller.updateDescription(name);
+          }),
         ],
       ),
     );
