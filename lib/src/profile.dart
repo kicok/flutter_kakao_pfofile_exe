@@ -134,46 +134,54 @@ class Profile extends GetView<ProfileController> {
   }
 
   Widget _profileImage() {
-    return Container(
-      width: 120,
-      height: 120,
-      child: Stack(children: [
-        Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(40),
-            child: SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset(
-                "assets/images/default_user.png",
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: controller.pickImage,
+      child: SizedBox(
+        width: 120,
+        height: 120,
+        child: Stack(children: [
+          Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: controller.myProfile.value.avatarFile == null
+                    ? Image.asset(
+                        "assets/images/default_user.png",
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        controller.myProfile.value.avatarFile!,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ),
-        ),
-        controller.isEditMyProfile.value
-            ? Positioned(
-                left: 0,
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  alignment: Alignment.bottomRight,
+          controller.isEditMyProfile.value
+              ? Positioned(
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
                   child: Container(
-                    padding: const EdgeInsets.all(7),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt,
-                      size: 20,
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      padding: const EdgeInsets.all(7),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-              )
-            : Container(),
-      ]),
+                )
+              : Container(),
+        ]),
+      ),
     );
   }
 
