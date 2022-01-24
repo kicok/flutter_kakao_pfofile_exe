@@ -43,6 +43,7 @@ class ProfileController extends GetxController {
   }
 
   void rollback() {
+    myProfile.value.initImagefile();
     myProfile(originMyProfile);
     toggleEditProfile();
   }

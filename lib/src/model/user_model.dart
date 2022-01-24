@@ -38,4 +38,9 @@ class UserModel {
           avatarUrl: user.avatarUrl,
           backgroundUrl: user.backgroundUrl,
         );
+
+  void initImagefile() {
+    avatarFile = null;
+    backgroundFile = null;
+  }
 }
