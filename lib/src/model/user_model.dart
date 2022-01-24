@@ -5,7 +5,6 @@ class UserModel {
   String? docId; // firebase로 data를 주고 받을때 필요한 다큐멘트 Id
   String? name;
   String? description;
-  String? backgroudnUrl;
   DateTime? lastLoginTime;
   DateTime? createdTime;
 
@@ -22,10 +21,21 @@ class UserModel {
     this.docId,
     this.name,
     this.description,
-    this.backgroudnUrl,
     this.lastLoginTime,
     this.createdTime,
     this.avatarUrl,
     this.backgroundUrl,
   });
+
+  UserModel.clone(UserModel user)
+      : this(
+          uid: user.uid,
+          docId: user.docId,
+          name: user.name,
+          description: user.description,
+          lastLoginTime: user.lastLoginTime,
+          createdTime: user.createdTime,
+          avatarUrl: user.avatarUrl,
+          backgroundUrl: user.backgroundUrl,
+        );
 }

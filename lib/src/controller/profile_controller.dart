@@ -3,11 +3,17 @@ import 'package:get/state_manager.dart';
 
 class ProfileController extends GetxController {
   RxBool isEditMyProfile = false.obs;
-  Rx<UserModel> myProfile =
-      UserModel(name: "평범하게 살자", description: "구독과 좋아요 부탁드립니다").obs;
+
+  UserModel originMyProfile = UserModel(
+    name: "평범하게 살자",
+    description: "구독과 좋아요 부탁드립니다!",
+  );
+
+  Rx<UserModel> myProfile = UserModel().obs;
   @override
   void onInit() {
     isEditMyProfile(false);
+    myProfile(UserModel.clone(originMyProfile));
     super.onInit();
   }
 
@@ -30,5 +36,10 @@ class ProfileController extends GetxController {
     myProfile.update((my) {
       my?.description = description;
     });
+  }
+
+  void rollback() {
+    myProfile(originMyProfile);
+    toggleEditProfile();
   }
 }

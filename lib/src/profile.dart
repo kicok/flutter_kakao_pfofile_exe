@@ -12,44 +12,60 @@ class Profile extends GetView<ProfileController> {
       top: Get.mediaQuery.padding.top,
       left: 0,
       right: 0,
-      child: Container(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        //color: Colors.red,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: controller.toggleEditProfile,
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                  Text(
-                    "프로필 편집",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
+      child: Obx(
+        () => Container(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          //color: Colors.red,
+          child: controller.isEditMyProfile.value
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: controller.rollback,
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          Text(
+                            "프로필 편집",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                print("프로필 편집 저장");
-              },
-              child: const Text(
-                "완료",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        print("프로필 편집 저장");
+                      },
+                      child: const Text(
+                        "완료",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(Icons.close_sharp, color: Colors.white),
+                    Row(
+                      children: const [
+                        Icon(Icons.qr_code, color: Colors.white),
+                        SizedBox(width: 10),
+                        Icon(Icons.settings, color: Colors.white),
+                      ],
+                    )
+                  ],
                 ),
-              ),
-            ),
-          ],
         ),
       ),
     );
