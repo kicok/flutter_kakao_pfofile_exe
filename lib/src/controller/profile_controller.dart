@@ -5,6 +5,8 @@ import 'package:get/state_manager.dart';
 
 import 'image_crop_controller.dart';
 
+enum ProfileImageType { thumbNail, background }
+
 class ProfileController extends GetxController {
   RxBool isEditMyProfile = false.obs;
 
@@ -48,11 +50,15 @@ class ProfileController extends GetxController {
     toggleEditProfile();
   }
 
-  void pickImage() async {
+  void pickImage(ProfileImageType type) async {
     if (isEditMyProfile.value) {
       File? file = await ImageCropController.to.selectImage();
       myProfile.update((my) {
-        my?.avatarFile = file;
+        if (ProfileImageType.thumbNail == type) {
+          my?.avatarFile = file;
+        } else {
+          my?.backgroundFile = file;
+        }
       });
     }
   }

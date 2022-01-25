@@ -75,10 +75,18 @@ class Profile extends GetView<ProfileController> {
     return Positioned(
       child: GestureDetector(
         onTap: () {
-          print("change my backgroundImage");
+          controller.pickImage(ProfileImageType.background);
         },
-        child: Container(
-          color: Colors.transparent, // 최소 투명색이든 무슨색이든 넣어줘야 전체 영역을 가질수 있다.
+        child: Obx(
+          () => Container(
+            color: Colors.transparent, // 최소 투명색이든 무슨색이든 넣어줘야 전체 영역을 가질수 있다.
+            child: controller.myProfile.value.backgroundFile != null
+                ? Image.file(
+                    controller.myProfile.value.backgroundFile!,
+                    fit: BoxFit.cover,
+                  )
+                : Container(),
+          ),
         ),
       ),
     );
@@ -135,7 +143,9 @@ class Profile extends GetView<ProfileController> {
 
   Widget _profileImage() {
     return GestureDetector(
-      onTap: controller.pickImage,
+      onTap: () {
+        controller.pickImage(ProfileImageType.thumbNail);
+      },
       child: SizedBox(
         width: 120,
         height: 120,
