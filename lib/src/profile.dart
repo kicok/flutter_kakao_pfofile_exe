@@ -40,9 +40,7 @@ class Profile extends GetView<ProfileController> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        print("프로필 편집 저장");
-                      },
+                      onTap: controller.save,
                       child: const Text(
                         "완료",
                         style: TextStyle(

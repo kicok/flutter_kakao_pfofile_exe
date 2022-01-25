@@ -62,4 +62,10 @@ class ProfileController extends GetxController {
       });
     }
   }
+
+  void save() {
+    originMyProfile = myProfile.value;
+    // 저장이 되더라도 rollback(초기화)를 하면 myProfile.value.initImagefile() 코드 때문에 선택한 이미지는 모두 사라짐.
+    toggleEditProfile();
+  }
 }
