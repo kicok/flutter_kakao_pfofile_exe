@@ -71,6 +71,10 @@ class Profile extends GetView<ProfileController> {
 
   Widget _backgroundImage() {
     return Positioned(
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
       child: GestureDetector(
         onTap: () {
           controller.pickImage(ProfileImageType.background);
@@ -78,6 +82,7 @@ class Profile extends GetView<ProfileController> {
         child: Obx(
           () => Container(
             color: Colors.transparent, // 최소 투명색이든 무슨색이든 넣어줘야 전체 영역을 가질수 있다.
+            // color: Colors.red,
             child: controller.myProfile.value.backgroundFile != null
                 ? Image.file(
                     controller.myProfile.value.backgroundFile!,
