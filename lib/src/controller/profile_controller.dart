@@ -52,7 +52,7 @@ class ProfileController extends GetxController {
 
   void pickImage(ProfileImageType type) async {
     if (isEditMyProfile.value) {
-      File? file = await ImageCropController.to.selectImage();
+      File? file = await ImageCropController.to.selectImage(type);
       myProfile.update((my) {
         if (ProfileImageType.thumbNail == type) {
           my?.avatarFile = file;
