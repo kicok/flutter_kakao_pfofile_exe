@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "108962451543",
+    "project_id": "flutter-kakao-profile-exe",
+    "storage_bucket": "flutter-kakao-profile-exe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108962451543:android:a326dd20705172061ad312",
+        "android_client_info": {
+          "package_name": "com.example.flutter_kakao_profile_exe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108962451543-av3ottpmhtbt6kadl0k8sjqnst5rhlb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_kakao_profile_exe",
+            "certificate_hash": "bc54d6701ad8092be340f34a42ac6a0acf4ea97d"
+          }
+        },
+        {
+          "client_id": "108962451543-4gnkpjbbaule739de9omp0jqdrvl7ge6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO0IOvjFAvLh-944bsxpq5RScwpT4PC3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108962451543-4gnkpjbbaule739de9omp0jqdrvl7ge6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
