@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_initializing_formals
+
 import 'dart:io';
 
 class UserModel {
@@ -43,4 +45,27 @@ class UserModel {
     avatarFile = null;
     backgroundFile = null;
   }
+
+  // 로그인 할때 전달 받은 데이터를 Map으로 전환한다.
+  Map<String, dynamic> toMap() {
+    return {
+      "uid": uid,
+      "name": name,
+      "description": description,
+      "avatar_url": avatarUrl,
+      "background_url": backgroundUrl,
+      "created_time": createdTime,
+      "last_login_time": lastLoginTime,
+    };
+  }
+
+  UserModel.fromJson(Map<String, dynamic> json, String docId)
+      : uid = json['uid'] as String,
+        docId = docId,
+        name = json['name'] as String,
+        description = json['description'] ?? "",
+        lastLoginTime = json['last_login_time'].toDate(),
+        createdTime = json['created_time'].toDate(),
+        avatarUrl = json['avatar_url'] as String,
+        backgroundUrl = json['background_url'] ?? "";
 }

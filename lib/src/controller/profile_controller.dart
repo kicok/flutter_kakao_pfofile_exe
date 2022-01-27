@@ -1,25 +1,55 @@
 import 'dart:io';
 
 import 'package:flutter_kakao_profile_exe/src/model/user_model.dart';
-import 'package:get/state_manager.dart';
+import 'package:flutter_kakao_profile_exe/src/repository/firebase_user_repository.dart';
+import 'package:get/get.dart';
 
 import 'image_crop_controller.dart';
 
 enum ProfileImageType { thumbNail, background }
 
 class ProfileController extends GetxController {
+  static ProfileController get to => Get.find();
   RxBool isEditMyProfile = false.obs;
 
-  UserModel originMyProfile = UserModel(
-    name: "평범하게 살자",
-    description: "구독과 좋아요 부탁드립니다!",
-  );
+  // UserModel originMyProfile = UserModel(
+  //   name: "평범하게 살자",
+  //   description: "구독과 좋아요 부탁드립니다!",
+  // );
+  // 위의 originMyProfile 이 없어도 아래의 코드에서 초기화 되므로 위의 코드는 필요 없어짐..(주석처리함)
+  UserModel originMyProfile = UserModel();
+
+  void authstateChanges(dynamic firebaseUser) async {
+    if (firebaseUser != null) {
+      UserModel? userModel =
+          await FirebaseUserRepository.findUserByUid(firebaseUser.uid);
+
+      if (userModel != null) {
+        originMyProfile = userModel;
+        FirebaseUserRepository.updateLastLoginDate(
+            userModel.docId!, DateTime.now());
+      } else {
+        originMyProfile = UserModel(
+          uid: firebaseUser.uid,
+          name: firebaseUser.displayName,
+          avatarUrl: firebaseUser.photoURL,
+          createdTime: DateTime.now(),
+          lastLoginTime: DateTime.now(),
+        );
+
+        String docId = await FirebaseUserRepository.signup(originMyProfile);
+        originMyProfile.docId = docId; // 해당 users 정보의 다큐멘트 id
+      }
+      myProfile(UserModel.clone(originMyProfile));
+    }
+  }
 
   Rx<UserModel> myProfile = UserModel().obs;
+
   @override
   void onInit() {
     isEditMyProfile(false);
-    myProfile(UserModel.clone(originMyProfile));
+
     super.onInit();
   }
 
