@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'components/text_edit_widget.dart';
-import 'controller/profile_controller.dart';
+import '../components/text_edit_widget.dart';
+import '../controller/profile_controller.dart';
 
 class Profile extends GetView<ProfileController> {
   const Profile({Key? key}) : super(key: key);
@@ -292,8 +292,8 @@ class Profile extends GetView<ProfileController> {
       bottom: 120,
       left: 0,
       right: 0,
-      child: Container(
-        height: 220,
+      child: SizedBox(
+        height: 260,
         child: Obx(
           () => Column(
             children: [
