@@ -31,4 +31,9 @@ class FirebaseUserRepository {
       users.doc(docId).update({"last_login_time": dateTime});
     }
   }
+
+  static void updateData(String docId, UserModel originMyProfile) {
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
+    users.doc(docId).update(originMyProfile.toMap());
+  }
 }
