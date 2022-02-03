@@ -83,16 +83,31 @@ class Profile extends GetView<ProfileController> {
           () => Container(
             color: Colors.transparent, // 최소 투명색이든 무슨색이든 넣어줘야 전체 영역을 가질수 있다.
             // color: Colors.red,
-            child: controller.myProfile.value.backgroundFile != null
-                ? Image.file(
-                    controller.myProfile.value.backgroundFile!,
-                    fit: BoxFit.cover,
-                  )
-                : Container(),
+            child: controller.isEditMyProfile.value
+                ? _editBackgroundImageWidget()
+                : _backgroundImageWidget(),
           ),
         ),
       ),
     );
+  }
+
+  Widget _editBackgroundImageWidget() {
+    return controller.myProfile.value.backgroundFile == null
+        ? _backgroundImageWidget()
+        : Image.file(
+            controller.myProfile.value.backgroundFile!,
+            fit: BoxFit.cover,
+          );
+  }
+
+  Widget _backgroundImageWidget() {
+    return controller.myProfile.value.backgroundUrl == null
+        ? Container()
+        : Image.network(
+            controller.myProfile.value.backgroundUrl!,
+            fit: BoxFit.cover,
+          );
   }
 
   Widget _oneButton(IconData icon, String title, Function()? ontap) {

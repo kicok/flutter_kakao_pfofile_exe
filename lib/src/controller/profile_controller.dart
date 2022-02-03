@@ -14,7 +14,7 @@ class ProfileController extends GetxController {
   static ProfileController get to => Get.find();
   RxBool isEditMyProfile = false.obs;
 
-  FireStorageRepository _fireStorageRepository = FireStorageRepository();
+  final FireStorageRepository _fireStorageRepository = FireStorageRepository();
 
   // UserModel originMyProfile = UserModel(
   //   name: "평범하게 살자",
@@ -104,6 +104,13 @@ class ProfileController extends GetxController {
     });
   }
 
+  void _updateBackgroundImageUrl(String downloadUrl) {
+    originMyProfile.backgroundUrl = downloadUrl;
+    myProfile.update((user) {
+      user!.backgroundUrl = downloadUrl;
+    });
+  }
+
   void save() {
     originMyProfile = myProfile.value;
     // 저장이 되더라도 rollback(초기화)를 하면 myProfile.value.initImagefile() 코드 때문에 선택한 이미지는 모두 사라짐.
@@ -115,12 +122,30 @@ class ProfileController extends GetxController {
         originMyProfile.avatarFile as File,
       );
       task.snapshotEvents.listen((event) async {
-        if (event.bytesTransferred == event.totalBytes) { // 업로드가 완료 되면
+        if (event.bytesTransferred == event.totalBytes) {
+          // 업로드가 완료 되면
           String downloadUrl = await event.ref.getDownloadURL();
           _updateProfileImageUrl(downloadUrl);
 
           FirebaseUserRepository.updateImageUrl(
               originMyProfile.docId!, downloadUrl, "avatar_url");
+        }
+      });
+    }
+    if (originMyProfile.backgroundFile != null) {
+      UploadTask task = _fireStorageRepository.uploalImageFile(
+        originMyProfile.uid as String,
+        "background",
+        originMyProfile.backgroundFile as File,
+      );
+      task.snapshotEvents.listen((event) async {
+        if (event.bytesTransferred == event.totalBytes) {
+          // 업로드가 완료 되면
+          String downloadUrl = await event.ref.getDownloadURL();
+          _updateBackgroundImageUrl(downloadUrl);
+
+          FirebaseUserRepository.updateImageUrl(
+              originMyProfile.docId!, downloadUrl, "background_url");
         }
       });
     }
