@@ -32,6 +32,15 @@ class FirebaseUserRepository {
     }
   }
 
+  static void updateImageUrl(String docId, String url, String fieldName) {
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
+
+    if (docId.isNotEmpty) {
+      // if (docId.isNotEmpty) 이 구문이 반드시 있어야 함.
+      users.doc(docId).update({fieldName: url});
+    }
+  }
+
   static void updateData(String docId, UserModel originMyProfile) {
     CollectionReference users = FirebaseFirestore.instance.collection("users");
     users.doc(docId).update(originMyProfile.toMap());

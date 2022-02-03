@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_kakao_profile_exe/src/model/user_model.dart';
+import 'package:flutter_kakao_profile_exe/src/repository/fire_storage_repository.dart';
 import 'package:flutter_kakao_profile_exe/src/repository/firebase_user_repository.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +13,8 @@ enum ProfileImageType { thumbNail, background }
 class ProfileController extends GetxController {
   static ProfileController get to => Get.find();
   RxBool isEditMyProfile = false.obs;
+
+  FireStorageRepository _fireStorageRepository = FireStorageRepository();
 
   // UserModel originMyProfile = UserModel(
   //   name: "평범하게 살자",
@@ -93,9 +97,33 @@ class ProfileController extends GetxController {
     }
   }
 
+  void _updateProfileImageUrl(String downloadUrl) {
+    originMyProfile.avatarUrl = downloadUrl;
+    myProfile.update((user) {
+      user!.avatarUrl = downloadUrl;
+    });
+  }
+
   void save() {
     originMyProfile = myProfile.value;
     // 저장이 되더라도 rollback(초기화)를 하면 myProfile.value.initImagefile() 코드 때문에 선택한 이미지는 모두 사라짐.
+
+    if (originMyProfile.avatarFile != null) {
+      UploadTask task = _fireStorageRepository.uploalImageFile(
+        originMyProfile.uid as String,
+        "profile",
+        originMyProfile.avatarFile as File,
+      );
+      task.snapshotEvents.listen((event) async {
+        if (event.bytesTransferred == event.totalBytes) { // 업로드가 완료 되면
+          String downloadUrl = await event.ref.getDownloadURL();
+          _updateProfileImageUrl(downloadUrl);
+
+          FirebaseUserRepository.updateImageUrl(
+              originMyProfile.docId!, downloadUrl, "avatar_url");
+        }
+      });
+    }
 
     FirebaseUserRepository.updateData(originMyProfile.docId!, originMyProfile);
     toggleEditProfile();
