@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "108962451543",
-    "project_id": "flutter-kakao-profile-exe",
-    "storage_bucket": "flutter-kakao-profile-exe.appspot.com"
+    "project_number": "721623548532",
+    "project_id": "flutter-kakao-profile-ex",
+    "storage_bucket": "flutter-kakao-profile-ex.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:108962451543:android:84a85db3c6a14a801ad312",
+        "mobilesdk_app_id": "1:721623548532:android:6847ff7d567a457b89c721",
         "android_client_info": {
           "package_name": "com.example.flutter_kakao_profile_exe"
         }
       },
       "oauth_client": [
         {
-          "client_id": "108962451543-kqrv0f3gfcq6b6q46v6ie1o3sm2hlmm2.apps.googleusercontent.com",
+          "client_id": "721623548532-7iohhjpmoivqa1ilg8vf75v3p56qtoc8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.flutter_kakao_profile_exe",
@@ -22,24 +22,24 @@
           }
         },
         {
-          "client_id": "108962451543-4gnkpjbbaule739de9omp0jqdrvl7ge6.apps.googleusercontent.com",
+          "client_id": "721623548532-ffkf3bb2obpse18lpbtelqi8e0o44o8h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO0IOvjFAvLh-944bsxpq5RScwpT4PC3U"
+          "current_key": "AIzaSyB2mk0UXFtkP2CjHMfo_jjlNcBOUFIyWys"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "108962451543-4gnkpjbbaule739de9omp0jqdrvl7ge6.apps.googleusercontent.com",
+              "client_id": "721623548532-ffkf3bb2obpse18lpbtelqi8e0o44o8h.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "108962451543-fi5td8dhi6kbp0q6dvk6tru84v1qmad1.apps.googleusercontent.com",
+              "client_id": "721623548532-ogu43g224i5ti2j1s6kiftfp1fgj9n75.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.flutterKakaoProfileExe"
